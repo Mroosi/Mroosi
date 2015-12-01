@@ -1,5 +1,7 @@
 package com.company.Tolk;
 
+import javafx.scene.control.TextField;
+
 import java.util.HashMap;
 import java.util.Scanner;
 
@@ -7,11 +9,10 @@ import java.util.Scanner;
  * Created by Madis on 21.11.2015.
  */
 public class Edasi {
-    public void ed() {
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Sisesta siia oma tekst! Tahelepanu ara sisesta teksti tapitahti ja symboleid");
-        System.out.println("Kirjavahemarkidest saab kasutada: !.?,;:. Katsu nendega hakkama saada!");
-        String tekst = sc.nextLine();
+
+    public String ed() {
+        String tekst = ("sisendTekst");
+        String vastus = "";
         HashMap<String, String> t2hestik = new HashMap<String, String>();
         t2hestik.put("A", "P");
         t2hestik.put("B", "C");
@@ -60,10 +61,13 @@ public class Edasi {
             char m = tekst.charAt(index);
             String t = Character.toString(m);
             String su = t.toUpperCase();
-            String g = t2hestik.get(su);
-            System.out.print(g);
+            vastus = t2hestik.get(su);
+            return vastus;
 
         }
+        return vastus;
     }
+
+
 
 }

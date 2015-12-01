@@ -1,33 +1,49 @@
 package com.company.Tolk;
 
-import java.util.Scanner;
+import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
-public class Main {
 
-    public static void main(String[] args) {
-        int p = 0;
-        while (p <= 0) {
-            Scanner sc = new Scanner(System.in);
-            System.out.println( );
-            System.out.println("Kas tahad teksti krypteerida v6i dekrypteerida?");
-            System.out.println("Krypteerimiseks vajuta K ja dekrypteerimiseks D");
-            System.out.println("V2ljumiseks E");
-            String vastus = sc.nextLine();
-            String v = vastus.toUpperCase();
-            if (v.equals("K")) {
+public class Main extends Application {
+
+        @Override
+        public void start(Stage primaryStage) throws Exception {
+            VBox vbox = new VBox();
+            Scene loginScene = new Scene(vbox);
+            primaryStage.setScene(loginScene);
+            primaryStage.setTitle("ProjektTolk");
+            primaryStage.show();
+
+            Label tekstSiia = new Label("Sisesta siia oma tekst.");
+            TextField textField = new TextField();
+            Label votmeKoht = new Label("Sisesta siia krypteerimise/dekrypteerimise voti");
+            PasswordField votmeisend = new PasswordField();
+            Button krypt = new Button("Krypteeri");
+            Label teade = new Label();
+            teade.setText("Sisesta siia oma tekst! Tahelepanu ara sisesta teksti tapitahti ja symboleid." +
+                    "Kirjavahemarkidest saab kasutada: !.?,;:. Katsu nendega hakkama saada!");
+
+
+            vbox.getChildren().addAll(tekstSiia, textField, votmeKoht, votmeisend, krypt, teade);
+            String sisendTekst = textField.getText();
+            String voti = votmeisend.getText();
+
+            krypt.setOnAction(event -> {
                 Edasi e = new Edasi();
                 e.ed();
-            } else if (v.equals("D")) {
-                Tagasi t = new Tagasi();
-                t.tag();
-            } else if (v.equals("E")) {
-                p = p++;
-                System.exit(0);
-            } else {
-                System.out.println("K v D v E?");
-            }
+                String v = e.ed();
+                System.out.println(v);
 
+            });
 
         }
-    }
+
+
+
 }
