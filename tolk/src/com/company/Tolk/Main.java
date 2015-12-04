@@ -11,39 +11,56 @@ import javafx.stage.Stage;
 
 
 public class Main extends Application {
-
-        @Override
-        public void start(Stage primaryStage) throws Exception {
-            VBox vbox = new VBox();
-            Scene loginScene = new Scene(vbox);
-            primaryStage.setScene(loginScene);
-            primaryStage.setTitle("ProjektTolk");
-            primaryStage.show();
-
-            Label tekstSiia = new Label("Sisesta siia oma tekst.");
-            TextField textField = new TextField();
-            Label votmeKoht = new Label("Sisesta siia krypteerimise/dekrypteerimise voti");
-            PasswordField votmeisend = new PasswordField();
-            Button krypt = new Button("Krypteeri");
-            Label teade = new Label();
-            teade.setText("Sisesta siia oma tekst! Tahelepanu ara sisesta teksti tapitahti ja symboleid." +
-                    "Kirjavahemarkidest saab kasutada: !.?,;:. Katsu nendega hakkama saada!");
+    public String sisendT = "abc";
+    public int vot = 1;
 
 
-            vbox.getChildren().addAll(tekstSiia, textField, votmeKoht, votmeisend, krypt, teade);
-            String sisendTekst = textField.getText();
-            String voti = votmeisend.getText();
+    @Override
+    public void start(Stage primaryStage) throws Exception {
+        VBox vbox = new VBox();
+        Scene loginScene = new Scene(vbox);
+        primaryStage.setScene(loginScene);
+        primaryStage.setTitle("SalaKirjutusMasin");
+        primaryStage.show();
 
-            krypt.setOnAction(event -> {
-                Edasi e = new Edasi();
-                e.ed();
-                String v = e.ed();
-                System.out.println(v);
+        Label sisendTekst = new Label("Sisesta tekst");
+        TextField kasutajaSisend = new TextField();
+        Button krypt = new Button("Krypteeri");
+        Label votmeLabel = new Label("Sisesta krypteerimise voti numbrites");
+        PasswordField votmeSisend = new PasswordField();
+        Label teade = new Label();
 
-            });
+        vbox.getChildren().addAll(sisendTekst, kasutajaSisend, votmeLabel, votmeSisend, krypt, teade);
 
-        }
+        krypt.setOnAction(event -> {
+            int kryptVoti = 0;
+
+            String sisse = kasutajaSisend.getText();  /*Tahaks siit saada need v‰‰rtused ja kasutada neid Edasi klassis*/
+            String voti = votmeSisend.getText();
+            try {
+                kryptVoti = Integer.parseInt(voti);
+            } catch (Exception e) {
+                teade.setText("Sisesta krypteerimise voti numbrites");
+            }
+            sisendT = sisse;
+            vot = kryptVoti;
+            Edasi k = new Edasi();
+            k.ed();
+            String v = k.ed();
+            teade.setText(String.valueOf(v));
 
 
+        });
+    }
+
+    public int KVoti(){
+        int v = vot;
+        return v;
+
+    }
+    public String Jutt(){
+        String j = sisendT;
+        return j;
+    }
 
 }

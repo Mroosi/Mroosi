@@ -1,73 +1,51 @@
 package com.company.Tolk;
 
-import javafx.scene.control.TextField;
-
 import java.util.HashMap;
-import java.util.Scanner;
 
-/**
- * Created by Madis on 21.11.2015.
- */
+import java.util.*;
+
 public class Edasi {
 
+    public String[] tahestik = {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N",
+            "O", "P", "R", "S", "Z", "T", "U", "V", "W", "X", "Y", "Q", " ", "1", "2", "3", "4", "5", "6",
+            "7", "8", "9", "0", ".", "!", "?", ",", ";", ":", "(", ")"};
+
+    public int voti() {
+        Main v = new Main();
+        v.KVoti();
+        int voti = v.KVoti();             /*Siia peaks tulema int kasutaja sisendist*/
+        System.out.println(voti);
+        return voti;
+
+    }
+
     public String ed() {
-        String tekst = ("sisendTekst");
+        Main s = new Main();
+        s.Jutt();
         String vastus = "";
+        System.out.println(vastus);
+        int v = voti();
+        String tekst = s.Jutt();          /*Siia peaks tulema tekst kasutaja sisendist*/
+        int pikkus = tekst.length();
         HashMap<String, String> t2hestik = new HashMap<String, String>();
-        t2hestik.put("A", "P");
-        t2hestik.put("B", "C");
-        t2hestik.put("C", "Q");
-        t2hestik.put("D", "K");
-        t2hestik.put("E", "V");
-        t2hestik.put("F", "E");
-        t2hestik.put("G", "S");
-        t2hestik.put("H", "Y");
-        t2hestik.put("I", "R");
-        t2hestik.put("J", "I");
-        t2hestik.put("K", "B");
-        t2hestik.put("L", "T");
-        t2hestik.put("M", "Z");
-        t2hestik.put("N", "U");
-        t2hestik.put("O", "@");
-        t2hestik.put("P", "G");
-        t2hestik.put("R", "J");
-        t2hestik.put("S", "F");
-        t2hestik.put("Z", "W");
-        t2hestik.put("T", "X");
-        t2hestik.put("U", "N");
-        t2hestik.put("V", "L");
-        t2hestik.put("W", "A");
-        t2hestik.put("X", "M");
-        t2hestik.put("Y", "H");
-        t2hestik.put("Q", "D");
-        t2hestik.put(" ", "O");
-        t2hestik.put("1", "=");
-        t2hestik.put("2", "(");
-        t2hestik.put("3", "*");
-        t2hestik.put("4", "/");
-        t2hestik.put("5", "&");
-        t2hestik.put("6", ")");
-        t2hestik.put("7", "_");
-        t2hestik.put("8", "}");
-        t2hestik.put("9", "]");
-        t2hestik.put("0", "%");
-        t2hestik.put(".", ".");
-        t2hestik.put("!", "!");
-        t2hestik.put("?", "?");
-        t2hestik.put(",", ",");
-        t2hestik.put(";", ";");
-        t2hestik.put(":", ":");
-        for (int index = 0; index < tekst.length(); index++) {
-            char m = tekst.charAt(index);
+        for (int i = 0; i <tahestik.length; i++) {
+            int t = i+v;
+            while (t>=tahestik.length){
+                t=t-tahestik.length;
+            }
+            t2hestik.put(tahestik[i],tahestik[t]);
+        }
+        for (int i = 0; i < pikkus; i++) {
+            char m = tekst.charAt(i);
             String t = Character.toString(m);
             String su = t.toUpperCase();
-            vastus = t2hestik.get(su);
-            return vastus;
+            String g = t2hestik.get(su);
+            vastus = vastus + g;
+            System.out.println(vastus);
 
         }
         return vastus;
     }
-
 
 
 }
