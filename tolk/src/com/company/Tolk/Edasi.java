@@ -2,7 +2,6 @@ package com.company.Tolk;
 
 import java.util.HashMap;
 
-import java.util.*;
 
 public class Edasi {
 
@@ -10,22 +9,12 @@ public class Edasi {
             "O", "P", "R", "S", "Z", "T", "U", "V", "W", "X", "Y", "Q", " ", "1", "2", "3", "4", "5", "6",
             "7", "8", "9", "0", ".", "!", "?", ",", ";", ":", "(", ")"};
 
-    public int voti() {
-        Main v = new Main();
-        v.KVoti();
-        int voti = v.KVoti();             /*Siia peaks tulema int kasutaja sisendist*/
-        System.out.println(voti);
-        return voti;
-
-    }
 
     public String ed() {
-        Main s = new Main();
-        s.Jutt();
         String vastus = "";
         System.out.println(vastus);
-        int v = voti();
-        String tekst = s.Jutt();          /*Siia peaks tulema tekst kasutaja sisendist*/
+        int v = 1;                        /*Siia peaks tulema võti kasutaja sisendist*/
+        String tekst = "abc";          /*Siia peaks tulema tekst kasutaja sisendist*/
         int pikkus = tekst.length();
         HashMap<String, String> t2hestik = new HashMap<String, String>();
         for (int i = 0; i <tahestik.length; i++) {

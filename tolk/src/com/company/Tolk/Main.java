@@ -2,18 +2,12 @@ package com.company.Tolk;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 
 public class Main extends Application {
-    public String sisendT = "abc";
-    public int vot = 1;
-
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -25,14 +19,25 @@ public class Main extends Application {
 
         Label sisendTekst = new Label("Sisesta tekst");
         TextField kasutajaSisend = new TextField();
-        Button krypt = new Button("Krypteeri");
+        Label valjundTekst = new Label("Vastus");
+        TextField valjund = new TextField();
         Label votmeLabel = new Label("Sisesta krypteerimise voti numbrites");
         PasswordField votmeSisend = new PasswordField();
+        ToggleGroup grupp = new ToggleGroup();
+        ToggleButton krypteeri = new ToggleButton("Krypteeri    ");
+        ToggleButton dekrypteeri = new ToggleButton("Dekrypteeri");
+        ToggleButton info = new ToggleButton("   Info   ");
+        ToggleButton exit = new ToggleButton("Exit");
+        krypteeri.setToggleGroup(grupp);
+        dekrypteeri.setToggleGroup(grupp);
+        exit.setToggleGroup(grupp);
+        info.setToggleGroup(grupp);
         Label teade = new Label();
+        /*TextArea*/
 
-        vbox.getChildren().addAll(sisendTekst, kasutajaSisend, votmeLabel, votmeSisend, krypt, teade);
+        vbox.getChildren().addAll(votmeLabel, votmeSisend, sisendTekst, kasutajaSisend, valjundTekst, valjund, krypteeri, dekrypteeri, info,  exit,teade);
 
-        krypt.setOnAction(event -> {
+        krypteeri.setOnAction(event -> {
             int kryptVoti = 0;
 
             String sisse = kasutajaSisend.getText();  /*Tahaks siit saada need väärtused ja kasutada neid Edasi klassis*/
@@ -42,25 +47,39 @@ public class Main extends Application {
             } catch (Exception e) {
                 teade.setText("Sisesta krypteerimise voti numbrites");
             }
-            sisendT = sisse;
-            vot = kryptVoti;
+
             Edasi k = new Edasi();
             k.ed();
-            String v = k.ed();
-            teade.setText(String.valueOf(v));
+            String vastus = k.ed();
+            valjund.setText(vastus);
 
 
         });
+        dekrypteeri.setOnAction(event -> {
+            int kryptVoti = 0;
+
+            String sisse = kasutajaSisend.getText();  /*Tahaks siit saada need väärtused ja kasutada neid Edasi klassis*/
+            String voti = votmeSisend.getText();
+            try {
+                kryptVoti = Integer.parseInt(voti);
+            } catch (Exception e) {
+                teade.setText("Sisesta krypteerimise voti numbrites");
+            }
+
+            Tagasi t = new Tagasi();
+            t.tag();
+            String vastuTagasi = t.tag();
+            valjund.setText(vastuTagasi);
+
+
+        });
+        info.setOnAction(event -> {
+            teade.setText("Siia tuleb info programmi kohta ja kasutusjuhend");
+        });
+        exit.setOnAction(event -> {
+            System.exit(0);
+        });
     }
 
-    public int KVoti(){
-        int v = vot;
-        return v;
-
-    }
-    public String Jutt(){
-        String j = sisendT;
-        return j;
-    }
 
 }
