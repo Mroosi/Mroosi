@@ -58,7 +58,7 @@ public class Main extends Application {
         dekrypteeri.setOnAction(event -> {
             int kryptVoti = 0;
 
-            String sisse = kasutajaSisend.getText();  /*Tahaks siit saada need v‰‰rtused ja kasutada neid Edasi klassis*/
+            String sisse = kasutajaSisend.getText();  /*Tahaks siit saada need v‰‰rtused ja kasutada neid Tagasi klassis*/
             String voti = votmeSisend.getText();
             try {
                 kryptVoti = Integer.parseInt(voti);

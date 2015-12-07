@@ -9,7 +9,6 @@ public class Edasi {
             "O", "P", "R", "S", "Z", "T", "U", "V", "W", "X", "Y", "Q", " ", "1", "2", "3", "4", "5", "6",
             "7", "8", "9", "0", ".", "!", "?", ",", ";", ":", "(", ")"};
 
-
     public String ed() {
         String vastus = "";
         System.out.println(vastus);
