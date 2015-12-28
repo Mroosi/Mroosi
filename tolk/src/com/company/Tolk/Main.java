@@ -6,14 +6,9 @@ import javafx.scene.control.*;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Font;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-
-import java.awt.*;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 
 
 public class Main extends Application {
@@ -21,7 +16,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         VBox vbox = new VBox();
-        Scene SalaKirjutusMasin = new Scene(vbox, 500, 300);
+        Scene SalaKirjutusMasin = new Scene(vbox, 600, 400);
         primaryStage.setScene(SalaKirjutusMasin);
         primaryStage.setTitle("SalaKirjutusMasin");
         primaryStage.show();
@@ -53,10 +48,15 @@ public class Main extends Application {
         info.setToggleGroup(grupp);
         save.setToggleGroup(grupp);
         Label teade = new Label();
+        Label teineTeade = new Label();
+        Label kolmasTeade = new Label();
         vbox.getChildren().addAll(votmeLabel, votmeSisend, sisendTekst, kasutajaSisend, valjundTekst, valjund, krypteeri,
-                dekrypteeri, save, puhasta,  info, exit, teade);
+                dekrypteeri, save, puhasta,  info, exit, teade, teineTeade, kolmasTeade);
 
         krypteeri.setOnAction(event -> {
+            teade.setText("");
+            teineTeade.setText("");
+            kolmasTeade.setText("");
             int kryptVoti = 0;
             String sisse = kasutajaSisend.getText();
             String voti = votmeSisend.getText();
@@ -67,8 +67,6 @@ public class Main extends Application {
             }
             int vot = kryptVoti;
             String siss = sisse;
-            System.out.println(vot);
-            System.out.println(siss);
             Edasi k = new Edasi(vot, siss);
             k.ed();
             String vastus = k.ed();
@@ -76,6 +74,9 @@ public class Main extends Application {
             salvestis = vastus;
         });
         dekrypteeri.setOnAction(event -> {
+            teade.setText("");
+            teineTeade.setText("");
+            kolmasTeade.setText("");
             int kryptVoti = 0;
             String sisse = kasutajaSisend.getText();
             String voti = votmeSisend.getText();
@@ -86,40 +87,53 @@ public class Main extends Application {
             }
             int vot = kryptVoti;
             String siss = sisse;
-            System.out.println(vot);
-            System.out.println(siss);
             Tagasi t = new Tagasi(vot, siss);
             t.tag();
             String vastuTagasi = t.tag();
             valjund.setText(vastuTagasi);
         });
         save.setOnAction(event -> {
+            FileChooser fileChooser = new FileChooser();
+            FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("(*.txt)", "*.txt");
+            fileChooser.getExtensionFilters().add(extFilter);
+            fileChooser.setTitle("Salvesta");
+            fileChooser.setInitialFileName("SKM");
+            File salvestis = fileChooser.showSaveDialog(primaryStage);
+            if (salvestis != null){
+                try
+                {
+                    FileWriter fw = new FileWriter( salvestis.getAbsoluteFile( ) );
+                    BufferedWriter bw = new BufferedWriter(fw);
+                    bw.write(this.salvestis);
+                    bw.close( );
+                    teade.setText("Salvestatud: " + (salvestis.getAbsolutePath()));
+                }
+                catch( IOException e )
+                {
+                    System.out.println("Error: " + e);
+                    teade.setText("Errrrrrrr");
+                }
 
-            try
-            {
-                File file = new File("SKM");
-                FileWriter fw = new FileWriter( file.getAbsoluteFile( ) );
-                BufferedWriter bw = new BufferedWriter( fw );
-                bw.write(salvestis);
-                bw.close( );
-                teade.setText("Salvestatud: " + (file.getAbsolutePath()));
             }
-            catch( IOException e )
-            {
-                System.out.println("Error: " + e);
-                e.printStackTrace( );
-                teade.setText("Errrrrrrr");
+            else{
+                teade.setText("Salvestamine katkestatud");
             }
 
         });
+
         puhasta.setOnAction(event -> {
             teade.setText("");
             valjund.setText("");
             votmeSisend.setText("");
             kasutajaSisend.setText("");
+            teineTeade.setText("");
+            kolmasTeade.setText("");
         });
         info.setOnAction(event -> {
-            teade.setText("Siia tuleb info programmi kohta ja kasutusjuhend");
+            teade.setText("SalaKirjutusMasin krypteerib ja dekrypteerib etteantud teksti vastavalt sisestatud votmele. Saadud tulemus");
+            teineTeade.setText("kuvatakse vastuse lahtrisse ning tulemust on voimalik ka salvestada.");
+            kolmasTeade.setText("A:Mroosi-2015");
+
         });
         exit.setOnAction(event -> {
             System.exit(0);
