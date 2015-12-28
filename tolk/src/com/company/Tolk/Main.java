@@ -11,8 +11,9 @@ import javafx.stage.Stage;
 import java.io.*;
 
 
+
 public class Main extends Application {
-    String salvestis = "";
+    String salvestis;
     @Override
     public void start(Stage primaryStage) throws Exception {
         VBox vbox = new VBox();
@@ -32,33 +33,33 @@ public class Main extends Application {
         krypteeri.setPrefWidth(100.0);
         ToggleButton dekrypteeri = new ToggleButton("Dekrypteeri");
         dekrypteeri.setPrefWidth(100.0);
-        ToggleButton save = new ToggleButton("Save");
-        save.setPrefWidth(100.0);
+        ToggleButton salvesta = new ToggleButton("Save");
+        salvesta.setPrefWidth(100.0);
         ToggleButton info = new ToggleButton("Info");
         info.setPrefWidth(100.0);
         ToggleButton exit = new ToggleButton("Exit");
         exit.setPrefWidth(100.0);
-        ToggleButton puhasta = new ToggleButton("Puhasta valjad");
-        puhasta.setPrefWidth(100.0);
+        ToggleButton puhastaValjad = new ToggleButton("Puhasta valjad");
+        puhastaValjad.setPrefWidth(100.0);
 
         krypteeri.setToggleGroup(grupp);
         dekrypteeri.setToggleGroup(grupp);
         exit.setToggleGroup(grupp);
-        puhasta.setToggleGroup(grupp);
+        puhastaValjad.setToggleGroup(grupp);
         info.setToggleGroup(grupp);
-        save.setToggleGroup(grupp);
+        salvesta.setToggleGroup(grupp);
         Label teade = new Label();
         Label teineTeade = new Label();
         Label kolmasTeade = new Label();
         vbox.getChildren().addAll(votmeLabel, votmeSisend, sisendTekst, kasutajaSisend, valjundTekst, valjund, krypteeri,
-                dekrypteeri, save, puhasta,  info, exit, teade, teineTeade, kolmasTeade);
+                dekrypteeri, salvesta, puhastaValjad,  info, exit, teade, teineTeade, kolmasTeade);
 
         krypteeri.setOnAction(event -> {
             teade.setText("");
             teineTeade.setText("");
             kolmasTeade.setText("");
             int kryptVoti = 0;
-            String sisse = kasutajaSisend.getText();
+            String tekstSisse = kasutajaSisend.getText();
             String voti = votmeSisend.getText();
             try {
                 kryptVoti = Integer.parseInt(voti);
@@ -66,19 +67,18 @@ public class Main extends Application {
                 teade.setText("Sisesta krypteerimise voti numbrites");
             }
             int vot = kryptVoti;
-            String siss = sisse;
-            Edasi k = new Edasi(vot, siss);
-            k.ed();
-            String vastus = k.ed();
-            valjund.setText(vastus);
-            salvestis = vastus;
+            Krypteeri k = new Krypteeri(vot, tekstSisse);
+            k.krypteeri();
+            String kryptVastus = k.krypteeri();
+            valjund.setText(kryptVastus);
+            salvestis = kryptVastus;
         });
         dekrypteeri.setOnAction(event -> {
             teade.setText("");
             teineTeade.setText("");
             kolmasTeade.setText("");
             int kryptVoti = 0;
-            String sisse = kasutajaSisend.getText();
+            String tekstSisse = kasutajaSisend.getText();
             String voti = votmeSisend.getText();
             try {
                 kryptVoti = Integer.parseInt(voti);
@@ -86,42 +86,34 @@ public class Main extends Application {
                 teade.setText("Sisesta krypteerimise voti numbrites");
             }
             int vot = kryptVoti;
-            String siss = sisse;
-            Tagasi t = new Tagasi(vot, siss);
-            t.tag();
-            String vastuTagasi = t.tag();
-            valjund.setText(vastuTagasi);
+            Dekrypteeri t = new Dekrypteeri(vot, tekstSisse);
+            t.dekrypteeri();
+            String dekryptVastus = t.dekrypteeri();
+            valjund.setText(dekryptVastus);
         });
-        save.setOnAction(event -> {
+        salvesta.setOnAction(event -> {
             FileChooser fileChooser = new FileChooser();
             FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("(*.txt)", "*.txt");
             fileChooser.getExtensionFilters().add(extFilter);
             fileChooser.setTitle("Salvesta");
-            fileChooser.setInitialFileName("SKM");
+            fileChooser.setInitialFileName("Nimetu");
             File salvestis = fileChooser.showSaveDialog(primaryStage);
-            if (salvestis != null){
-                try
-                {
-                    FileWriter fw = new FileWriter( salvestis.getAbsoluteFile( ) );
+            if (salvestis != null) {
+                try {
+                    FileWriter fw = new FileWriter(salvestis.getAbsoluteFile());
                     BufferedWriter bw = new BufferedWriter(fw);
                     bw.write(this.salvestis);
-                    bw.close( );
+                    bw.close();
                     teade.setText("Salvestatud: " + (salvestis.getAbsolutePath()));
-                }
-                catch( IOException e )
-                {
+                } catch (IOException e) {
                     System.out.println("Error: " + e);
                     teade.setText("Errrrrrrr");
                 }
-
-            }
-            else{
+            } else {
                 teade.setText("Salvestamine katkestatud");
             }
-
         });
-
-        puhasta.setOnAction(event -> {
+        puhastaValjad.setOnAction(event -> {
             teade.setText("");
             valjund.setText("");
             votmeSisend.setText("");
@@ -133,12 +125,8 @@ public class Main extends Application {
             teade.setText("SalaKirjutusMasin krypteerib ja dekrypteerib etteantud teksti vastavalt sisestatud votmele. Saadud tulemus");
             teineTeade.setText("kuvatakse vastuse lahtrisse ning tulemust on voimalik ka salvestada.");
             kolmasTeade.setText("A:Mroosi-2015");
-
         });
-        exit.setOnAction(event -> {
-            System.exit(0);
-        });
-
+        exit.setOnAction(event -> System.exit(0));
     }
 
 

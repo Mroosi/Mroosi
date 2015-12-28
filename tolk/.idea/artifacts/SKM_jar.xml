@@ -1,6 +1,9 @@
 <component name="ArtifactManager">
   <artifact type="jar" name="SKM:jar">
-    <output-path>$PROJECT_DIR$/out/artifacts/SKM_jar</output-path>
+    <output-path>$USER_HOME$/Desktop</output-path>
+    <properties id="ant-postprocessing">
+      <options enabled="true" />
+    </properties>
     <root id="archive" name="tolk.jar">
       <element id="module-output" name="tolk" />
     </root>
