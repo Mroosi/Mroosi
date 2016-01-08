@@ -86,10 +86,11 @@ public class Main extends Application {
                 teade.setText("Sisesta krypteerimise voti numbrites");
             }
             int vot = kryptVoti;
-            Dekrypteeri t = new Dekrypteeri(vot, tekstSisse);
-            t.dekrypteeri();
-            String dekryptVastus = t.dekrypteeri();
+            Dekrypteeri d = new Dekrypteeri(vot, tekstSisse);
+            d.dekrypteeri();
+            String dekryptVastus = d.dekrypteeri();
             valjund.setText(dekryptVastus);
+            salvestis = dekryptVastus;
         });
         salvesta.setOnAction(event -> {
             FileChooser fileChooser = new FileChooser();
@@ -97,14 +98,14 @@ public class Main extends Application {
             fileChooser.getExtensionFilters().add(extFilter);
             fileChooser.setTitle("Salvesta");
             fileChooser.setInitialFileName("Nimetu");
-            File salvestis = fileChooser.showSaveDialog(primaryStage);
-            if (salvestis != null) {
+            File salvestaja = fileChooser.showSaveDialog(primaryStage);
+            if (salvestaja != null) {
                 try {
-                    FileWriter fw = new FileWriter(salvestis.getAbsoluteFile());
+                    FileWriter fw = new FileWriter(salvestaja.getAbsoluteFile());
                     BufferedWriter bw = new BufferedWriter(fw);
                     bw.write(this.salvestis);
                     bw.close();
-                    teade.setText("Salvestatud: " + (salvestis.getAbsolutePath()));
+                    teade.setText("Salvestatud: " + (salvestaja.getAbsolutePath()));
                 } catch (IOException e) {
                     System.out.println("Error: " + e);
                     teade.setText("Errrrrrrr");
